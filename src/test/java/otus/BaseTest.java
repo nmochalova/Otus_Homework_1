@@ -26,8 +26,9 @@ public class BaseTest {
 
     @After
     public void cleanUp() {
-            driver.close();
+        if(driver != null) {
+ //           driver.close();
             driver.quit();
-            driver = null;
+        }
     }
 }

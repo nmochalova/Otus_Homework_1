@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import waiters.StandartWaiter;
 
-public class Page {
+public abstract class Page {
     protected WebDriver driver;
     protected StandartWaiter standartWaiter;        //явные ожидания
 
