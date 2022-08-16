@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -125,12 +126,11 @@ public class MainPage extends Page {
 
     //Преобразование строки в дату
     private Date stringToDate(int day, String month) {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);         //Дописать логику для дат на сломе года. Сейчас ко всем датам подставляется текущий год.
+        LocalDate date = LocalDate.now();
 
         String monthNumber = getMonth(month);
         try {
-            String str = String.format("%d/%s/%d", day, monthNumber, year);
+            String str = String.format("%d/%s/%d", day, monthNumber, date.getYear());
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
             return formatter.parse(str);
         } catch (ParseException e) {
