@@ -22,10 +22,10 @@ public class MainPage extends Page {
         driver.get(SITE);
     }
 
-    @FindBy(xpath = "//div[@class='container container-lessons']/div[@class='lessons']")
+    @FindBy(xpath = "//div[@class='container container-lessons']")
     private WebElement popularCourses;
 
-    @FindBy(xpath = "//div[@class='container-padding-bottom']/div[@class='lessons']")
+    @FindBy(xpath = "//div[@class='container-padding-bottom']")
     private WebElement specializationsCourses;
 
     @FindBy(xpath = "//div[@class='lessons']//a[contains(@class,'lessons__new-item')]")
@@ -40,14 +40,14 @@ public class MainPage extends Page {
     }
 
     public String getNameOfCourse(WebElement course) {
-        return course.findElement(By.className("lessons__new-item-title")).getAttribute("innerText");
+        return course.findElement(By.className("lessons__new-item-title")).getText(); //.getAttribute("innerText");
     }
 
     public HashMap<WebElement, DataTableCourse> getNamesAndDates() {
         HashMap<WebElement, DataTableCourse> nameAndDate = new HashMap<>();
         String nameCourse, dateCourse;
 
-        List<WebElement> blockPopular = popularCourses.findElements(By.tagName("a"));
+        List<WebElement> blockPopular = popularCourses.findElements(By.xpath("./div[@class='lessons']/a"));
         for (WebElement element : blockPopular) {
             nameCourse = element
                     .findElement(By.xpath(".//div[contains(@class,'lessons__new-item-title')]"))
@@ -58,7 +58,7 @@ public class MainPage extends Page {
             nameAndDate.put(element, new DataTableCourse(nameCourse, dateCourse));
         }
 
-        List<WebElement> blockSpecial = specializationsCourses.findElements(By.tagName("a"));
+        List<WebElement> blockSpecial = specializationsCourses.findElements(By.xpath("./div[@class='lessons']/a"));
         for (WebElement element : blockSpecial) {
             nameCourse = element
                     .findElement(By.xpath(".//div[contains(@class,'lessons__new-item-title')]"))
