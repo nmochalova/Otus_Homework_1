@@ -20,9 +20,6 @@ public class CoursePage extends Page{
          else
              locator = By.tagName("title");
 
-       //Ожидаем появления заголовка на странице
-        assertTrue(standartWaiter.elementShouldBePresent(locator));
-
        return driver.findElement(locator).getAttribute("innerText");
     }
 
