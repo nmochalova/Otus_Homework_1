@@ -23,10 +23,10 @@ public class FindCourse_Test extends BaseTest {
         List<String> names = mainPage.getNamesAllCourse();
 
         if (filter == null)
-            names.stream().forEach(System.out::println);
+            names.forEach(System.out::println);
         else{
             List<String> namesAfterFilter = mainPage.filterCourseByName(names, filter);
-            namesAfterFilter.stream().forEach(System.out::println);
+            namesAfterFilter.forEach(System.out::println);
         }
     }
 
