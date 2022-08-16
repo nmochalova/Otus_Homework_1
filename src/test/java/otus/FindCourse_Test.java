@@ -1,6 +1,6 @@
 package otus;
 
-import dataTable.DataTableCourse;
+import datatable.DataTableCourse;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class FindCourse_Test extends BaseTest {
 
     @Test
-    public void FindCourseByName() {
+    public void findCourseByName() {
         MainPage mainPage = new MainPage(driver);
         mainPage.openSite();
 

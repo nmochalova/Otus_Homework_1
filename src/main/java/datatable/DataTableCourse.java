@@ -1,4 +1,4 @@
-package dataTable;
+package datatable;
 
 import java.util.Date;
 

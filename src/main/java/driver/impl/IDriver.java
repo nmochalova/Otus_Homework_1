@@ -13,7 +13,7 @@ public interface IDriver {
     String REMOTE_URL = System.getProperty("webdriver.remote.url");
     boolean HEADLESS = Boolean.valueOf(System.getProperty("webdriver.headless"));
 
-    public WebDriver newDriver();
+     WebDriver newDriver();
 
     default URL getRemoteUrl() {
         try {
