@@ -81,7 +81,7 @@ public class MainPage extends Page {
 
     //Метод выбора курса, стартующего раньше всех/позже всех (при совпадении дат - выбрать любой) при помощи reduce
     //flag принимает значение "max" - для выбора курса, стартующего позже всех и "min" - раньше всех.
-    public WebElement getMinMaxDateOfCourse(HashMap<WebElement, DataTableCourse> nameAndDate, String flag) {
+    public WebElement getMinMaxDateOfCourse(HashMap<WebElement, DataTableCourse> nameAndDate, Boolean flag) {
 
         for(Map.Entry<WebElement, DataTableCourse> entry : nameAndDate.entrySet()) {
             Date dt = parserDateRegex(entry.getValue().getDateString());
@@ -91,13 +91,13 @@ public class MainPage extends Page {
         }
 
         WebElement result = null;
-        if (flag.equals("max")) {
+        if (flag) { //true - ищем курс на максимальную дату
             result = nameAndDate.entrySet().stream()
                     .filter(p -> p.getValue().getDate()!=null)
                     .reduce((s1, s2) -> (s1.getValue().getDate().after(s2.getValue().getDate()) ? s1 : s2))
                     .map(p -> p.getKey())
                     .get();
-        } else if (flag.equals("min")) {
+        } else { //false - ищем курс на минимальную дату
             result = nameAndDate.entrySet().stream()
                     .filter(p -> p.getValue().getDate()!=null)
                     .reduce((s1,s2) -> (s1.getValue().getDate().before(s2.getValue().getDate()) ? s1 : s2))
@@ -168,11 +168,6 @@ public class MainPage extends Page {
             default:
                 return null;
         }
-    }
-
-    public WebElement getCourseByName(String name) {
-        String locator = String.format("//div[@class='lessons']//a[contains(@class,'lessons__new-item')][contains(.,'%s')]",name);
-        return driver.findElement(By.xpath(locator));
     }
 
 }

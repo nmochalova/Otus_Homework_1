@@ -39,7 +39,7 @@ public class FindCourse_Test extends BaseTest {
         HashMap<WebElement, DataTableCourse> nameAndDate = mainPage.getNamesAndDates();
 
         //Выбираем самый ранний курс
-        WebElement course = mainPage.getMinMaxDateOfCourse(nameAndDate, "min");
+        WebElement course = mainPage.getMinMaxDateOfCourse(nameAndDate, false); //false = ищем min
         String titleBeforeClick = mainPage.getNameOfCourse(course).toUpperCase();
 
         //наводим курсор на выбранный курс
@@ -63,7 +63,7 @@ public class FindCourse_Test extends BaseTest {
 
         HashMap<WebElement, DataTableCourse> nameAndDate = mainPage.getNamesAndDates();
 
-        WebElement course = mainPage.getMinMaxDateOfCourse(nameAndDate, "max");
+        WebElement course = mainPage.getMinMaxDateOfCourse(nameAndDate, true); //true - ищем max
         String titleBeforeClick = mainPage.getNameOfCourse(course);
 
         //наводим курсор на выбранный курс
