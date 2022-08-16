@@ -1,5 +1,6 @@
 package pages;
 
+import data.Months;
 import datatable.DataTableCourse;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -140,34 +141,8 @@ public class MainPage extends Page {
 
     private String getMonth(String month) {
         String monthRUS = String.valueOf(month.toCharArray(), 0, 3);
-        switch (monthRUS) {
-            case "янв":
-                return "01";
-            case "фев":
-                return "02";
-            case "мар":
-                return "03";
-            case "апр":
-                return "04";
-            case "май":
-                return "05";
-            case "июн":
-                return "06";
-            case "июл":
-                return "07";
-            case "авг":
-                return "08";
-            case "сен":
-                return "09";
-            case "окт":
-                return "10";
-            case "ноя":
-                return "11";
-            case "дек":
-                return "12";
-            default:
-                return null;
-        }
+
+        return Months.findMonth(monthRUS);
     }
 
 }
