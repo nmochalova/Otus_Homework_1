@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.function.BinaryOperator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -81,8 +82,8 @@ public class MainPage extends Page {
     }
 
     //Метод выбора курса, стартующего раньше всех/позже всех (при совпадении дат - выбрать любой) при помощи reduce
-    //flag принимает значение "max" - для выбора курса, стартующего позже всех и "min" - раньше всех.
-    public WebElement getMinMaxDateOfCourse(HashMap<WebElement, DataTableCourse> nameAndDate, Boolean flag) {
+    //isMax принимает значение "max" - для выбора курса, стартующего позже всех и "min" - раньше всех.
+    public WebElement getMinMaxDateOfCourse(HashMap<WebElement, DataTableCourse> nameAndDate, Boolean isMax) {
 
         for(Map.Entry<WebElement, DataTableCourse> entry : nameAndDate.entrySet()) {
             Date dt = parserDateRegex(entry.getValue().getDateString());
@@ -91,20 +92,18 @@ public class MainPage extends Page {
             }
         }
 
-        WebElement result = null;
-        if (flag) { //true - ищем курс на максимальную дату
-            result = nameAndDate.entrySet().stream()
-                    .filter(p -> p.getValue().getDate()!=null)
-                    .reduce((s1, s2) -> (s1.getValue().getDate().after(s2.getValue().getDate()) ? s1 : s2))
-                    .map(p -> p.getKey())
-                    .get();
-        } else { //false - ищем курс на минимальную дату
-            result = nameAndDate.entrySet().stream()
-                    .filter(p -> p.getValue().getDate()!=null)
-                    .reduce((s1,s2) -> (s1.getValue().getDate().before(s2.getValue().getDate()) ? s1 : s2))
-                    .map(p -> p.getKey())
-                    .get();
-        }
+        BinaryOperator<Map.Entry<WebElement, DataTableCourse>> binaryOperator = isMax ?
+                (Map.Entry<WebElement, DataTableCourse> s1, Map.Entry<WebElement, DataTableCourse> s2)
+                        -> (s1.getValue().getDate().after(s2.getValue().getDate()) ? s1 : s2):
+                (Map.Entry<WebElement, DataTableCourse> s1, Map.Entry<WebElement, DataTableCourse> s2)
+                        -> (s1.getValue().getDate().after(s2.getValue().getDate()) ? s2 : s1);
+
+        WebElement result = nameAndDate.entrySet().stream()
+                .filter(p -> p.getValue().getDate()!=null)
+                .reduce(binaryOperator)
+                .map(p -> p.getKey())
+                .get();
+
         System.out.println("Выбран курс: " + result.getText());
         return result;
     }

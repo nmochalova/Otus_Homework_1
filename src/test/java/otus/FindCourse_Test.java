@@ -2,6 +2,8 @@ package otus;
 
 import datatable.DataTableCourse;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import pages.CoursePage;
