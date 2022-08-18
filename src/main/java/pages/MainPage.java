@@ -113,25 +113,27 @@ public class MainPage extends Page {
     private Date parserDateRegex(String stringDateFromSite) {
         int day;
         String month;
-        Pattern p = Pattern.compile("(?<day>\\d{1,2})\\W{1,3}(?<month>янв|фев|мар|апр|май|июн|июл|авг|сен|окт|ноя|дек)",
+        String year;
+        Pattern p = Pattern.compile("(?<day>\\d{1,2})\\W{1,3}(?<month>янв|фев|мар|апр|май|июн|июл|авг|сен|окт|ноя|дек)\\W{1,2}(?<year>\\d{4})?",
                 Pattern.CASE_INSENSITIVE+Pattern.UNICODE_CASE);
         Matcher m = p.matcher(stringDateFromSite);
 
         if(m.find()) {
             day = Integer.parseInt(m.group("day"));
             month = m.group("month");
-            return stringToDate(day, month);
+            year = m.group("year");
+            return stringToDate(day, month, year);
         } else
             return null;
     }
 
     //Преобразование строки в дату
-    private Date stringToDate(int day, String month) {
+    private Date stringToDate(int day, String month, String year) {
         LocalDate date = LocalDate.now();
 
         String monthNumber = getMonth(month);
         try {
-            String str = String.format("%d/%s/%d", day, monthNumber, date.getYear());
+            String str = String.format("%d/%s/%d", day, monthNumber, year==null ? date.getYear() : Integer.parseInt(year));
             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
             return formatter.parse(str);
         } catch (ParseException e) {
