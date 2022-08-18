@@ -12,10 +12,11 @@ public class BaseTest {
 
     protected EventFiringWebDriver driver;
     protected String filter;
+    protected String browser;
 
     @Before
     public void StartUp() {
-        String browser = System.getProperty("browser");
+        browser = System.getProperty("browser");
         filter = System.getProperty("filter");
 
         driver = new DriverFactory().getDriver(browser);
@@ -27,7 +28,7 @@ public class BaseTest {
     @After
     public void cleanUp() {
         if(driver != null) {
-            driver.close();
+            if (!browser.equals("firefox")) driver.close(); //для firefox close не делаем
             driver.quit();
         }
     }

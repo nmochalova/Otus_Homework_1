@@ -149,7 +149,11 @@ public class MainPage extends Page {
 
     public void moveToElement(WebElement element) {
         Actions actions = new Actions(driver);
-        actions.moveToElement(element).build().perform();
+        try {
+            actions.moveToElement(element).build().perform();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void clickToElement(WebElement element) {
