@@ -45,10 +45,8 @@ public class FindCourse_Test extends BaseTest {
         String titleBeforeClick = mainPage.getNameOfCourse(course).toUpperCase();
 
         //наводим курсор на выбранный курс
-        Actions actions = new Actions(driver);
-        actions.moveToElement(course).build().perform();
-
-        course.click();
+        mainPage.moveToElement(course);
+        mainPage.clickToElement(course);
 
         //Переходим на страницу курса
         CoursePage coursePage = new CoursePage(driver);
@@ -69,10 +67,8 @@ public class FindCourse_Test extends BaseTest {
         String titleBeforeClick = mainPage.getNameOfCourse(course);
 
         //наводим курсор на выбранный курс
-        Actions actions = new Actions(driver);
-        actions.moveToElement(course).build().perform();
-
-        course.click();
+        mainPage.moveToElement(course);
+        mainPage.clickToElement(course);
 
         CoursePage coursePage = new CoursePage(driver);
         String titleAfterClick = coursePage.getTitleByCourse(titleBeforeClick);

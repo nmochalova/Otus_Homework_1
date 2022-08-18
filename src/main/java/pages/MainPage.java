@@ -5,6 +5,7 @@ import datatable.DataTableCourse;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import java.text.ParseException;
@@ -142,6 +143,15 @@ public class MainPage extends Page {
         String monthRUS = String.valueOf(month.toCharArray(), 0, 3);
 
         return Months.findMonth(monthRUS);
+    }
+
+    public void moveToElement(WebElement element) {
+        Actions actions = new Actions(driver);
+        actions.moveToElement(element).build().perform();
+    }
+
+    public void clickToElement(WebElement element) {
+        element.click();
     }
 
 }
