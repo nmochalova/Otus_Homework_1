@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-//mvn clean test -Dbrowser="chrome" -Dfilter="QA" -Dtest=FindCourse_Test
+//mvn clean test -Dtest=FindCourse_Test -Dbrowser="chrome" -Dfilter="QA"
 public class FindCourse_Test extends BaseTest {
 
     @Test
