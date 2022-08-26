@@ -33,7 +33,7 @@ public class OperaWebDriver implements IDriver {
 
         if (getRemoteUrl() == null) {
             try {
-                downloadLocalWebDriver(DriverManagerType.CHROME);
+                downloadLocalWebDriver(DriverManagerType.OPERA);
             } catch (DriverTypeNotSupported ex) {
                 ex.printStackTrace();
             }

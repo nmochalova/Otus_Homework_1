@@ -34,6 +34,12 @@ public interface IDriver {
                 case CHROME:
                     wdmConfig.setChromeDriverVersion(browserVersion);
                     break;
+                case FIREFOX:
+                    wdmConfig.setFirefoxVersion(browserVersion);
+                    break;
+                case OPERA:
+                    wdmConfig.setOperaDriverVersion(browserVersion);
+                    break;
                 default:
                     throw new DriverTypeNotSupported(driverType.toString());
             }

@@ -33,7 +33,7 @@ public class FireFoxWebDriver implements IDriver {
 
         if (getRemoteUrl() == null) {
             try {
-                downloadLocalWebDriver(DriverManagerType.CHROME);
+                downloadLocalWebDriver(DriverManagerType.FIREFOX);
             } catch (DriverTypeNotSupported ex) {
                 ex.printStackTrace();
             }
