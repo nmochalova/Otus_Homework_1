@@ -1,11 +1,12 @@
 package otus;
 
+import annotaion.Driver;
 import datatable.DataTableCourse;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import extensions.UIExtension;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import pages.CoursePage;
 import pages.MainPage;
 
@@ -15,7 +16,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //mvn clean test -Dtest=FindCourse_Test -Dbrowser="chrome" -Dfilter="QA"
-public class FindCourse_Test extends BaseTest {
+@ExtendWith(UIExtension.class)
+public class FindCourse_Test {
+    @Driver
+    public WebDriver driver;
 
     @Test
     public void findCourseByName() {
@@ -23,7 +27,8 @@ public class FindCourse_Test extends BaseTest {
         mainPage.openSite();
 
         List<String> names = mainPage.getNamesAllCourse();
-
+        String filter = System.getProperty("filter");
+        
         if (filter == null)
             names.forEach(System.out::println);
         else{

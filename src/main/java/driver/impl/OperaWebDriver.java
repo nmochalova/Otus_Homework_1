@@ -22,6 +22,7 @@ public class OperaWebDriver implements IDriver {
         operaOptions.addArguments("--enable-extensions");
         operaOptions.addArguments("--homepage=about:blank");
         operaOptions.addArguments("--ignore-certificate-errors");
+        operaOptions.addArguments("--start-maximized");
         operaOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
         operaOptions.setCapability(CapabilityType.VERSION, System.getProperty("browser.version", ""));
         operaOptions.setCapability("enableVNC", Boolean.parseBoolean(System.getProperty("enableVNC", "false")));
