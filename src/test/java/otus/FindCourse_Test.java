@@ -1,6 +1,7 @@
 package otus;
 
 import annotaion.Driver;
+import data.Titles;
 import datatable.DataTableCourse;
 import extensions.UIExtension;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import pages.MainPage;
 import java.util.HashMap;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //mvn clean test -Dtest=FindCourse_Test -Dbrowser="chrome" -Dfilter="QA"
@@ -47,7 +49,7 @@ public class FindCourse_Test {
 
         //Выбираем самый ранний курс
         WebElement course = mainPage.getMinMaxDateOfCourse(nameAndDate, false); //false = ищем min
-        String titleBeforeClick = mainPage.getNameOfCourse(course).toUpperCase();
+        String titleBeforeClick = mainPage.getNameOfCourse(course);
 
         //наводим курсор на выбранный курс
         mainPage.moveToElement(course);
@@ -55,10 +57,12 @@ public class FindCourse_Test {
 
         //Переходим на страницу курса
         CoursePage coursePage = new CoursePage(driver);
-        String titleAfterClick = coursePage.getTitleByCourse(titleBeforeClick).toUpperCase();
+        String titleAfterClick = coursePage.getTitleByCourse(titleBeforeClick);
 
         //Проверяем, что открылась страница в соответствии с выбранным курсом
-        assertTrue(titleAfterClick.toUpperCase().contains(titleBeforeClick.toUpperCase()), "TEST_ERROR: The open page does not match the selected course.");
+        String expectedTitle= Titles.getExpectedTitleCoursePage(titleBeforeClick);
+
+        assertThat(titleAfterClick).isEqualTo(expectedTitle);
     }
 
     @Test
@@ -79,7 +83,8 @@ public class FindCourse_Test {
         String titleAfterClick = coursePage.getTitleByCourse(titleBeforeClick);
 
         //Проверяем, что открылась страница в соответствии с выбранным курсом
-        assertTrue(titleAfterClick.toUpperCase().contains(titleBeforeClick.toUpperCase()), "TEST_ERROR: The open page does not match the selected course.");
-    }
+        String expectedTitle= Titles.getExpectedTitleCoursePage(titleBeforeClick);
+
+        assertThat(titleAfterClick).isEqualTo(expectedTitle);    }
 
 }

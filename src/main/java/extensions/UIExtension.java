@@ -72,7 +72,7 @@ public class UIExtension implements BeforeEachCallback, AfterEachCallback, Execu
   @Override
   public void afterEach(ExtensionContext extensionContext) {
     if (driver != null) {
-      if (!System.getProperty("browser").equals("firefox")) driver.close(); //для firefox close не делаем
+      if (!System.getProperty("browser","chrome").equals("firefox")) driver.close(); //для firefox close не делаем
       driver.quit();
     }
   }
