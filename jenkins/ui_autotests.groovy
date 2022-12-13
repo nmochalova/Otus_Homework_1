@@ -6,13 +6,7 @@ timeout(180) {
                 currentBuild.description = ownerInfo
             }
             stage('Checkout') {
-                checkout([
-                        $class: 'GitSCM',
-                        branches: [[name: "refc/head/$REFSPEC"]],
-                        doGenerateSubmoduleConfiguration: false,
-                        submoduleCfg: [],
-                        userRemoteConfigs: [[credentialsId: 'jenkins', url: 'https://github.com/nmochalova/Otus_Homework_JavaTests.git']]
-                ])
+                checkout scm
             }
             stage('Running tests') {
                 sh "mvn test -Dbase.url=${BASE_URL} -Dbrowser.name=${BROWSER_NAME} -Dbrowser.version=${BROWSER_VERSION}"
