@@ -1,6 +1,5 @@
-/target/
-/.idea/
-/.idea/sonarlint
-/*.iws
-/*.iml
-/*.ipr
+.idea
+target
+allure-results
+.vscode
+.allure
