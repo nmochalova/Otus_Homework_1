@@ -18,6 +18,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //mvn clean test -Dtest=FindCourse_Test -Dbrowser="chrome" -Dfilter="QA"
+//allure serve -h 127.0.0.1 ./allure-results
 @ExtendWith(UIExtension.class)
 public class FindCourse_Test {
     @Driver

@@ -15,7 +15,7 @@ public class CoursePage extends Page{
 
         //Локаторы для разных курсов различаются
         try {
-            locator = By.cssSelector(".course-header2__title");
+            locator = By.cssSelector(".sc-182qdc9-1");
             return driver.findElement(locator).getAttribute("innerText");
         } catch (NoSuchElementException e) {
             locator = By.tagName("title");
