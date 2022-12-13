@@ -10,7 +10,8 @@ public enum Titles {
   Solution_Architecture("Cloud Solution Architecture","Cloud Solution Architecture"),
   Product_Analytic("Продуктовая аналитика","Продуктовая аналитика"),
   C_Sharp("Специализация С#","Специализация C# Developer"),
-  Admin_Linux("Специализация Administrator Linux","Специализация Administrator Linux"),
+  Admin_Linux("Специализация Administrator Linux","Administrator Linux"),
+  Admin_Linux_Prof("Administrator Linux. Professional","Administrator Linux. Professional"),
   Sys_Admin("Специализация Системный аналитик","Специализация системный аналитик"),
   Python("Специализация Python","Специализация Python Developer"),
   Machine_Learn("Специализация Machine Learning","Специализация Machine Learning"),
@@ -22,6 +23,7 @@ public enum Titles {
   Fullstack_Dev("Специализация Fullstack Developer","Специализация Fullstack Developer"),
   Network_Engineer("Специализация сетевой инженер", "Специализация Network Engineer"),
   PHP_Developer("Специализация PHP Developer","Специализация PHP Developer"),
+  Analitic("Системный аналитик. Advanced","Системный аналитик. Advanced"),
   Data_Engineer("Специализация Data Engineer","Специализация Data Engineer");
 
   private String titleMainPage;
