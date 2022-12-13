@@ -1,0 +1,11 @@
+---
+
+- scm:
+    name: git-ui-autotests
+    scm:
+      - git:
+         url: https://github.com/nmochalova/Otus_Homework_JavaTests.git
+         credentials-id: jenkins
+         branches:
+          - FETCH_HEAD
+        refspec: ${BRANCH}
