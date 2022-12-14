@@ -20,14 +20,18 @@ timeout(60) {
                 currentBuild.result = 'UNSTABLE'
             }
             }
-            stage('Publication allure report') {
-                allure([
-                        includeProperties: false,
-                        jdk: '',
-                        properties: [],
-                        reportBuildPolicy: 'ALWAYS',
-                        results: [[path: 'allure-results']]
-                ])
+            stage('reports') {
+                steps {
+                    script {
+                        allure([
+                                includeProperties: false,
+                                jdk: '',
+                                properties: [],
+                                reportBuildPolicy: 'ALWAYS',
+                                results: [[path: 'allure-results']]
+                        ])
+                    }
+                }
             }
 //            stage('Telegram notify') {
 //                shell(
