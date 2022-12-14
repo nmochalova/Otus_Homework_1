@@ -151,7 +151,6 @@ public class MainPage extends Page {
         Actions actions = new Actions(driver);
         try {
             actions.moveToElement(element).build().perform();
-            actions.pause(5000);
         } catch (Exception e) {
             e.printStackTrace();
         }

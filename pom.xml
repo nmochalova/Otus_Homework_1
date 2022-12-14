@@ -16,9 +16,9 @@
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
         <browser>chrome</browser>
         <base.url>https://otus.ru</base.url>
-        <browser.version></browser.version>
-        <enableVNC>true</enableVNC>
         <webdriver.remote.url>http://127.0.0.1:4445/wd/hub</webdriver.remote.url>
+        <browser.version/>
+        <enableVNC>true</enableVNC>
         <filter/>
 
         <test.project.language>RU</test.project.language>
@@ -100,6 +100,7 @@
                 <configuration>
                     <systemProperties>
                         <base.url>${base.url}</base.url>
+                        <enableVNC>${enableVNC}</enableVNC>
                         <webdriver.remote.url>${webdriver.remote.url}</webdriver.remote.url>
                         <browser>${browser}</browser>
                         <filter>${filter}</filter>
