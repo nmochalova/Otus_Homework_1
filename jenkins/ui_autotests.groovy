@@ -8,9 +8,9 @@ timeout(60) {
             stage('Checkout') {
                 checkout scm
             }
-//            stage('Running tests') {
-//                sh "mvn test -Dbase.url=${BASE_URL} -Dbrowser.name=${BROWSER_NAME} -Dbrowser.version=${BROWSER_VERSION}"
-//            }
+            stage('Running tests') {
+                sh "mvn test -Dbase.url=${BASE_URL} -Dbrowser=${BROWSER_NAME} -Dbrowser.version=${BROWSER_VERSION}"
+            }
 //            stage('Publisher allure report') {
 //                allure([
 //                        includeProperties: false,
