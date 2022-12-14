@@ -14,19 +14,19 @@ timeout(60) {
                     currentBuild.result = 'UNSTABLE'
                 }
             }
-//            stage('Publisher allure report') {
-//                allure([
-//                        includeProperties: false,
-//                        jdk              : '',
-//                        properties       : [],
-//                        reportBuildPolicy: 'ALWAYS',
-//                        result           : [[path: 'allure-results']]
-//                ])
-//            }
+            stage('Publisher allure report') {
+                allure([
+                        includeProperties: false,
+                        jdk              : '',
+                        properties       : [],
+                        reportBuildPolicy: 'ALWAYS',
+                        result           : [[path: 'allure-results']]
+                ])
+            }
 //            stage('Telegram notify') {
 //                shell(
 //                def bot_token = "5952779011:AAGHSuT02UfrsFarMFdsO8mKtD1SsqO2EO0"
-//                def chat_id = "-1001844362560"
+//                def chat_id = "1001844362560"
 //
 //                def message = "++++++++ UI tests report ++++++++\n"
 //                message += "Build URL: ${env.JOB_URL}\n"
@@ -44,7 +44,7 @@ timeout(60) {
 //                    }
 //                }
 //
-//                def url = "https://api.telegram.org/bot${bot_token}/sendMessage?chat_id=${chat_id}&text=${message}"
+//                def url = "https://api.telegram.org/bot${bot_token}/sendMessage?chat_id=-${chat_id}&text=${message}"
 //
 //                if ("${HTTP_PROXY}" != "") {
 //                    def proxyUrl = new URL("${HTTP_PROXY}")
