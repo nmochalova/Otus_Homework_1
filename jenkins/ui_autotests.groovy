@@ -9,10 +9,16 @@ timeout(60) {
                 checkout scm
             }
             stage('Running UI tests') {
-                result = sh "mvn test -Dbase.url=${BASE_URL} -Dbrowser=${BROWSER_NAME} -Dbrowser.version=${BROWSER_VERSION}"
-                if(result > 0) {
-                    currentBuild.result = 'UNSTABLE'
-                }
+
+            def exitCode = sh(
+                returnStatus: true,
+                script: """
+                mvn test -Dbase.url=${BASE_URL} -Dbrowser=${BROWSER_NAME} -Dbrowser.version=${BROWSER_VERSION}
+                """
+            )
+            if(exitCode == 1) {
+                currentBuild.result = 'UNSTABLE'
+            }
             }
             stage('Publisher allure report') {
                 allure([
