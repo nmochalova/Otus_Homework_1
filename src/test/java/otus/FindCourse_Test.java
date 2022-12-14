@@ -77,7 +77,6 @@ public class FindCourse_Test {
         String titleBeforeClick = mainPage.getNameOfCourse(course);
 
         //наводим курсор на выбранный курс
-        mainPage.moveToElement(course);
         mainPage.clickToElement(course);
 
         CoursePage coursePage = new CoursePage(driver);

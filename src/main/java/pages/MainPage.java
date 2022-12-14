@@ -157,6 +157,7 @@ public class MainPage extends Page {
     }
 
     public void clickToElement(WebElement element) {
+        moveToElement(element);
         element.click();
     }
 

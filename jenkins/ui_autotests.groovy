@@ -26,7 +26,7 @@ timeout(60) {
                         jdk              : '',
                         properties       : [],
                         reportBuildPolicy: 'ALWAYS',
-                        result           : [[path: 'allure-results']]
+                        results           : [[path: 'allure-results']]
                 ])
             }
 //            stage('Telegram notify') {
