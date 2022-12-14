@@ -8,8 +8,11 @@ timeout(60) {
             stage('Checkout') {
                 checkout scm
             }
-            stage('Running tests') {
-                sh "mvn test -Dbase.url=${BASE_URL} -Dbrowser=${BROWSER_NAME} -Dbrowser.version=${BROWSER_VERSION}"
+            stage('Running UI tests') {
+                result = sh "mvn test -Dbase.url=${BASE_URL} -Dbrowser=${BROWSER_NAME} -Dbrowser.version=${BROWSER_VERSION}"
+                if(result > 0) {
+                    currentBuild.result = 'UNSTABLE'
+                }
             }
 //            stage('Publisher allure report') {
 //                allure([
