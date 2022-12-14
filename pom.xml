@@ -17,6 +17,7 @@
         <browser>chrome</browser>
         <base.url>https://otus.ru</base.url>
         <browser.version></browser.version>
+        <webdriver.remote.url>http://127.0.0.1:4445/wd/hub</webdriver.remote.url>
         <filter/>
 
         <test.project.language>RU</test.project.language>
@@ -98,6 +99,7 @@
                 <configuration>
                     <systemProperties>
                         <base.url>${base.url}</base.url>
+                        <webdriver.remote.url>${webdriver.remote.url}</webdriver.remote.url>
                         <browser>${browser}</browser>
                         <filter>${filter}</filter>
                         <property>
