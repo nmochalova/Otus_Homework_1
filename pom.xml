@@ -17,6 +17,7 @@
         <browser>chrome</browser>
         <base.url>https://otus.ru</base.url>
         <browser.version></browser.version>
+        <enableVNC>true</enableVNC>
         <webdriver.remote.url>http://127.0.0.1:4445/wd/hub</webdriver.remote.url>
         <filter/>
 
