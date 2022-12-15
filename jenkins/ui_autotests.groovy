@@ -21,14 +21,13 @@ timeout(60) {
             }
             }
             stage('reports') {
-//                        allure([
-//                                includeProperties: false,
-//                                jdk: '',
-//                                properties: [],
-//                                reportBuildPolicy: 'ALWAYS',
-//                                results: [[path: 'allure-results']]
-//                        ])
-                sh "allure --version"
+                        allure([
+                                includeProperties: false,
+                                jdk: '',
+                                properties: [],
+                                reportBuildPolicy: 'ALWAYS',
+                                results: [[path: 'allure-results']]
+                        ])
             }
 //            stage('Telegram notify') {
 //                shell(
