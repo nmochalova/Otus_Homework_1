@@ -13,7 +13,7 @@ timeout(60) {
             def exitCode = sh(
                 returnStatus: true,
                 script: """
-                mvn test -Dbase.url=${BASE_URL} -Dbrowser=${BROWSER_NAME} -Dbrowser.version=${BROWSER_VERSION}
+                mvn test -Dbase.url=${BASE_URL} -Dbrowser=${BROWSER_NAME} -Dbrowser.version=${BROWSER_VERSION} -Dfilter=${FILTER}
                 """
             )
             if(exitCode == 1) {

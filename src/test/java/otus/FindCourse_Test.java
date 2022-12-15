@@ -4,6 +4,10 @@ import annotaion.Driver;
 import data.Titles;
 import datatable.DataTableCourse;
 import extensions.UIExtension;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
@@ -19,12 +23,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //mvn clean test -Dtest=FindCourse_Test -Dbrowser="chrome" -Dfilter="QA"
 //allure serve -h 127.0.0.1 ./allure-results
+
+@Epic("User cases")
+@Feature("Checking courses")
 @ExtendWith(UIExtension.class)
 public class FindCourse_Test {
     @Driver
     public WebDriver driver;
 
     @Test
+    @Story("This test is finding all courses by filter")
+    @Description("This test is finding all courses by filter -Dfilter")
     public void findCourseByName() {
         MainPage mainPage = new MainPage(driver);
         mainPage.openSite();
@@ -41,6 +50,8 @@ public class FindCourse_Test {
     }
 
     @Test
+    @Story("This test is finding earlier course")
+    @Description("This test is finding earlier course, than click and check it")
     public void getEarlyCourse() {
         MainPage mainPage = new MainPage(driver);
         mainPage.openSite();
@@ -67,6 +78,8 @@ public class FindCourse_Test {
     }
 
     @Test
+    @Story("This test is finding latest course")
+    @Description("This test is finding latest course, than click and check it")
     public void getLatestCourse() {
         MainPage mainPage = new MainPage(driver);
         mainPage.openSite();
