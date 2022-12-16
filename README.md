@@ -36,9 +36,15 @@ start /b selenoid-ui_windows_amd64.exe --selenoid-uri http://127.0.0.1:4445 -lis
 ## Конфигурация docker-compose Jenkins
 
 ## Настройки Jenkins
-1. Настройка Credential:
-- Настроить Jenkins → Manage Credential
+1. Настроить Jenkins → Управление плагинами  → Available plugins установить **плагины**:
+- Docker
+- Allure
+- Build user vars
+
+---
+2. Настроить Jenkins → Manage Credential настроить **credentional**:
 - выбрать домен global → Add credential
+- задать параметры:
 ```
 Kind = Username with password 
 Scope = Global
@@ -47,6 +53,41 @@ Password = {password from gitHub}
 ID = jenkins
 Description = jenkins
 ```
+---
+
+3. Настроить динамический сборщик **maven-slave**
+
+Состояние сборщиков → Configure Clouds → Add new cloud  → Docker  → Ввести следующие параметры:
+- Name = maven-slave
+- Docker HOST URI = unix:///var/run/docker.sock
+- Проверяем коннект: Test Connection
+- Установить чек-бокс: Enabled
+- Container Cap = 10
+- Добавляем шаблон:
+```
+Label = maven-slave
+Включить Enabled
+Name = maven-slave
+Docker-image = 127.0.0.1:5005/maven-slave:1.0.0
+```
+- Настройки контейнера:
+```
+Network = host
+Pull strategy = Pull once and update latest
+```
+
+_Проверяем работу maven-slave:_
+- Dashboard  → new Item
+- Name = first_job, Создать задачу со свободной конфигурацией
+- Label Expression=maven-slave
+- Расширенные  → Отображаемое имя = Hello from otus
+- Применить.
+- Build Steps  → Выполнить команду shell  → mvn --version
+
+Результат: должен подняться образ 127.0.0.1:5005/maven-slave:1.0.0 и выполнить команду mvn --version (проверяем в #Номер_сборки  → Вывод консоли)
+
+> Рекомендуется для статического сборщика master отключить фоновые процессы 
+> (Состояние сборщиков → Мастер → Настройки → Количество процессов-исполнителей = 0)
 
 ## Настройка шаблонов для генерации job
 
@@ -58,7 +99,7 @@ _*Ссылка на этот скрипт задается в шаблоне job
 
 - **Stage('checkout')** - коннект к репозиторию с тестами на gitHub.
 Настройка производится через [макрос](vscode/config/jobs/macroses/git-macroses-jenkins.yaml), в котором задан
-способ коннекта к gitHub. В данном случае по протоколу http с заданием логина/пароля в credentional = jenkins
+способ коннекта к gitHub. В данном случае по протоколу http с заданием логина/пароля в credentional = jenkins (см. Настройки Jenkins )
 
 
 - **Stage('Running UI tests')** - запуск тестов командой maven c указанием параметров:
@@ -74,12 +115,12 @@ _*Ссылка на этот скрипт задается в шаблоне job
 Для каждого теста будет подниматься образ selenoid с настроенной версией обозревателя. 
 > Url на **Selenoid** задается в [pom.xml](pom.xml) параметром 
 > 
->><webdriver.remote.url> http://127.0.0.1:4445/wd/hub </webdriver.remote.url> 
+><webdriver.remote.url> http://127.0.0.1:4445/wd/hub </webdriver.remote.url> 
 > 
 >Для того чтобы тесты выполнялись на локальной машине, нужно параметр сбросить в null.
 
 Настройка Selenoid_1 описана в [readme Otushome_4](https://github.com/nmochalova/Otushome_4).
-Для него подгружены слои трех обозревателей [Chrome v.103.0, v.104.0 и Opera v.88.0](vscode/browser.json)
+Для него подгружены слои трех обозревателей Chrome v.103.0, v.104.0 и Opera v.88.0 - [browser.json](vscode/browser.json)
 
 - **Stage('reports')** - генерация allure-отчетов из директории ./allure_results/
 
