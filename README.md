@@ -34,6 +34,17 @@ start /b selenoid-ui_windows_amd64.exe --selenoid-uri http://127.0.0.1:4445 -lis
 ![img_3.png](img/img_3.png)
 
 ## Конфигурация docker-compose Jenkins
+1. Создаем директорию Jenkins/
+2. Кладем в нее файл [docker-compose.yml](vscode/docker-compose.yml)
+3. Создадим директорию jenkins/nginx и в ней файл [Jenkins.conf](vscode/nginx/jenkins.conf)
+4. Создаем директорию Jenkins/config и в ней файл [Dockerfile](vscode/config/Dockerfile)
+5. Запускаем из директории, в которой находится docker-compose.yml командой
+```
+   docker-compose up -d
+```
+6. Проверяем
+![img_1.png](img_1.png)
+7. Проверяем что создалась директория jenkins/registry
 
 ## Настройки Jenkins
 1. Первоначальный запуск Jenkins:
@@ -42,6 +53,7 @@ start /b selenoid-ui_windows_amd64.exe --selenoid-uri http://127.0.0.1:4445 -lis
 ```
 docker logs jenkins_jenkins_1
 ```
+![img_2.png](img_2.png)
 - Выбираем режим установки Install suggested plugins
 - Создаем пользователя admin/admin
 > Все последующие настройки профиля Jenkins должны сохраняться в jenkins_home, это настраивается в
