@@ -40,5 +40,5 @@ services:
       - JAVA_OPTS="-Dhudson.model.DownloadService.noSignatureCheck=true -Dcom.cloudbees.workflow.rest.external.JobExt.maxRunsPerJob=20 -Dorg.apache.commons.jelly.tags.fmt.timeZone=Europe/Moscow -Duser.timezone=Europe/Moscow"
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
-      - /var/jenkins_home:/var/jenkins_home
+      - .\jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock

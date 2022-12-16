@@ -1,14 +1,14 @@
 ---
 
 - view:
-    name: QA
+    name: QA_2
     view-type: list
     description: |
       QA Jobs
     filter-executors: true
     filter-queue: true
     job-name:
-      - 'ui-autotests'
+      - 'ui-autotests_2'
     columns:
       - status
       - weather

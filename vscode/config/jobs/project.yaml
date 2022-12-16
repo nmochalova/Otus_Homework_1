@@ -4,4 +4,4 @@
     name: 'UI autotests'
     job-description: 'UI autotests'
     jobs:
-        - 'ui-autotests'
+        - 'ui-autotests_2'
