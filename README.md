@@ -36,11 +36,12 @@ start /b selenoid-ui_windows_amd64.exe --selenoid-uri http://127.0.0.1:4445 -lis
 ![img_3.png](img/img_31.png)
 
 ## Конфигурация docker-compose Jenkins
-1. Создаем директорию Jenkins/
-2. Кладем в нее файл [docker-compose.yml](vscode/docker-compose.yml)
-3. Создадим директорию jenkins/nginx и в ней файл [Jenkins.conf](vscode/nginx/jenkins.conf)
-4. Создаем директорию Jenkins/config и в ней файл [Dockerfile](vscode/config/Dockerfile)
-5. Запускаем из директории, в которой находится docker-compose.yml командой
+1. В Docker Desktop включить возможность использования docker-compose: Settings → General → Use Docker Compose v2
+2. Создаем директорию Jenkins/
+3. Кладем в нее файл [docker-compose.yml](vscode/docker-compose.yml)
+4. Создадим директорию jenkins/nginx и в ней файл [Jenkins.conf](vscode/nginx/jenkins.conf)
+5. Создаем директорию Jenkins/config и в ней файл [Dockerfile](vscode/config/Dockerfile)
+6. Запускаем из директории, в которой находится docker-compose.yml командой
 ```
    docker-compose up -d
 ```
