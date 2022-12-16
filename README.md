@@ -43,21 +43,22 @@ start /b selenoid-ui_windows_amd64.exe --selenoid-uri http://127.0.0.1:4445 -lis
 
 ## Скрипт генерации pipeline
 
-## Настройка Allure Reports
+## Настройка Allure Reports ![img.png](img.png)
 1. В java-проекте должны быть произведены все настройки для Allure - см. [pom.xml](pom.xml)
-2. В Jenkins установить Allure Plugin
-3. В Jenkins необходимо настроить установку Allure Commandline:
+2. Для читаемости отчетов необходимо проставить тэги allure по коду выполнения тестов.
+3. В Jenkins установить [Allure Plugin](https://plugins.jenkins.io/allure-jenkins-plugin/)
+4. В Jenkins необходимо настроить установку Allure Commandline:
 - Перейти в "Настроить Jenkins" → "Конфигурация глобальных инструментов"
 - В блоке Allure Commandline нажать кнопку Add Allure Commandline
 - В поле Name вписать наименование Allure Commandline, например, Allure 2.20.1
 - Выбрать версию библиотеки, которая будет выкачана из Maven central, например, 2.20.1
-3. Конфигурация Job для сборки отчета:
+3. Конфигурим Job для сборки отчета:
 - Создать тестовый job свободной конфигурацией.
 - В разделе Post-build Actions нажать кнопку Add post-build action → Allure Report
 - В поле Results указать путь до директории «allure-results» 
 4. После выполнения всех настроек запустите свою джобу. 
-5. После ее выполнения в блоке Build History напротив номера сборки появится значок Allure, 
+5. После ее выполнения в блоке Build History напротив номера сборки появится значок Allure , 
 кликнув по которому, вы увидите сформированный html-отчет (пустой).
 
 Эти манипуляции позволяют закачать нужные зависимости. 
-Теперь будет работать генерация allure-отчетов через stage('report') в скрипте pipeline .
+Теперь будет работать генерация allure-отчетов через stage('report') в скрипте pipeline 
