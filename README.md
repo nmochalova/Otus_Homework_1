@@ -2,7 +2,8 @@
 
 Проект содержит:
 - конфиги для настройки docker-compose для Jenkins
-- конфиги для генерации job-ов в Jenkins
+- настройку динамического сборщика maven-slave
+- конфиги для генерации job-ов в Jenkins по шаблону
 - скрипт генерации pipeline для запуска UI-тестов на Selenoid
 - настройку Allure-отчетности
 
@@ -130,11 +131,11 @@ _Проверяем работу maven-slave:_
 ```
 pip3 –version
 ```
-3. Скачиваем инструмент jenkins-job-builder:
+3. Скачиваем инструмент jenkins-job-builder. Инсталляция инструмента должна пройти в ту же директорию, где установлен Python.
 ```
 pip3 install --user jenkins-job-builder
 ```
-4. Проверяем командой. Инсталляция инструмента должна пройти в ту же директорию, где установлен Python. 
+4. Проверяем командой.  
 ```
 jenkins-jobs
 ```
@@ -146,7 +147,7 @@ jenkins-jobs
 7. Создаем директорию \jenkins\config\jobs\templates и в ней создаем шаблон [ui_autotests.yaml](vscode/config/jobs/templates/ui_autotests_2.yaml)
 8. Создадим директорию jobs\macroses и в ней макрос [git-macroses-jenkins.yaml](vscode/config/jobs/macroses/git-macroses-jenkins.yaml)
 с доступом по http к репозиторию gitHub, а также с указанием credantional, в котором будут храниться логин и пароль и который будет настраиваться в Jenkins.
-9. Запускаем генерацию job по шаблону командой
+9. Из директории Jenkins/Config запускаем генерацию job по шаблону:
 ```
 jenkins-jobs --conf jobs.ini update ./
 ```
@@ -154,7 +155,7 @@ jenkins-jobs --conf jobs.ini update ./
 10. Проверяем, что в Jenkins появилось view=QA и создался job = ui_autotests
 
 ## Скрипт* генерации pipeline
-_*Ссылка на этот скрипт задается в шаблоне job._
+_*Ссылка на этот скрипт задается в [шаблоне job]([ui_autotests.yaml](vscode/config/jobs/templates/ui_autotests_2.yaml))._
 
 [Скрипт генерации pipeline для UI тестов](jenkins/ui_autotests.groovy) содержит:
 
