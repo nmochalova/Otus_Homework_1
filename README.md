@@ -36,7 +36,7 @@ start /b selenoid-ui_windows_amd64.exe --selenoid-uri http://127.0.0.1:4445 -lis
 ## Конфигурация docker-compose Jenkins
 
 ## Настройки Jenkins
-1. Настройка кредов (Credential)
+1. Настройка Credential:
 - Настроить Jenkins → Manage Credential
 - выбрать домен global → Add credential
 ```
@@ -51,14 +51,14 @@ Description = jenkins
 ## Настройка шаблонов для генерации job
 
 
-## Скрипт генерации pipeline
-
-[Скрипт* генерации pipeline для UI тестов](jenkins/ui_autotests.groovy) содержит:
-
+## Скрипт* генерации pipeline
 _*Ссылка на этот скрипт задается в шаблоне job._
+
+[Скрипт генерации pipeline для UI тестов](jenkins/ui_autotests.groovy) содержит:
+
 - **Stage('checkout')** - коннект к репозиторию с тестами на gitHub.
 Настройка производится через [макрос](vscode/config/jobs/macroses/git-macroses-jenkins.yaml), в котором задан
-способ коннекта к gitHub. В данном случае по протоколу http с заданием логина/пароля в кредах (credentional).
+способ коннекта к gitHub. В данном случае по протоколу http с заданием логина/пароля в credentional = jenkins
 
 
 - **Stage('Running UI tests')** - запуск тестов командой maven c указанием параметров:
