@@ -36,13 +36,24 @@ start /b selenoid-ui_windows_amd64.exe --selenoid-uri http://127.0.0.1:4445 -lis
 ## Конфигурация docker-compose Jenkins
 
 ## Настройки Jenkins
-1. Настроить Jenkins → Управление плагинами  → Available plugins установить **плагины**:
+1. Первоначальный запуск Jenkins:
+- Открываем Jenkins в обозревателе по http://localhost/
+- Вводим ключ авторизации из логов
+```
+docker logs jenkins_jenkins_1
+```
+- Выбираем режим установки Install suggested plugins
+- Создаем пользователя admin/admin
+> Все последующие настройки профиля Jenkins должны сохраняться в jenkins_home, это настраивается в
+[docker-compose.yml](vscode/docker-compose.yml) параметр jenkins/volumes.
+---
+2. Установливаем **плагины** "Настроить Jenkins" → Управление плагинами  → Available plugins:
 - Docker
 - Allure
 - Build user vars
 
 ---
-2. Настроить Jenkins → Manage Credential настроить **credentional**:
+3. Настроить Jenkins → Manage Credential настроить **credentional**:
 - выбрать домен global → Add credential
 - задать параметры:
 ```
@@ -53,11 +64,21 @@ Password = {password from gitHub}
 ID = jenkins
 Description = jenkins
 ```
----
 
-3. Настроить динамический сборщик **maven-slave**
+## Настройка динамического сборщика 
+1. В Jenkins/ создаем директорию slaves/ и в ней [Dockerfile.maven](vscode/config/slaves/Dockerfile.maven) c настройками Maven
+2. Заносим slave в registry на этапе разворачивания Jenkins
+- Собираем image:
+```
+docker build -f ./Dockerfile.maven -t 127.0.0.1:5005/maven-slave:1.0.0 .
+```
+- Пушим образ (ip подсмотрели в [docker-compose.yml](vscode/docker-compose.yml) для registry):
+```
+  docker push 127.0.0.1:5005/maven-slave:1.0.0
+```
+- Проверяем, что в Jenkins/registry появилась /docker/ , в котором найдем maven-slave
 
-Состояние сборщиков → Configure Clouds → Add new cloud  → Docker  → Ввести следующие параметры:
+3. Настраиваем сборщик в Jenkins. Состояние сборщиков → Configure Clouds → Add new cloud  → Docker  → Ввести следующие параметры:
 - Name = maven-slave
 - Docker HOST URI = unix:///var/run/docker.sock
 - Проверяем коннект: Test Connection
