@@ -11,7 +11,7 @@
 1. В приложении Docker Desktop запустить:
 - docker-compose jenkins 
 - контейнер с Selenoid_1
-![img.png](img/img.png)
+![img.png](img/1img.png)
 2. Поднять Selenoid UI для мониторинга работы тестов внутри Selenoid (необязательно).
 
 - Для этого из директории c:\Work\OTUS\Selenoid\ggr_config\ нужно выполнить команду
@@ -23,15 +23,15 @@ start /b selenoid-ui_windows_amd64.exe --selenoid-uri http://127.0.0.1:4445 -lis
 3. Авторизоваться в Jenkins: http://localhost/ (admin/admin)
 4. Собрать с параметрами по-умолчанию сборку для job **ui_autotests**
 5. Мониторинг выполнения сборки по этапам:
-![img_2.png](img/img_2.png)
+![img_2.png](img/img_21.png)
 - Checkout - коннект к репозиторию с тестами на git и checkout его на docker-образ Jenkins
 - Running UI tests - выгрузка всех зависимостей maven и запуск тестов. Для каждого теста будет подниматься образ selenoid с настроенной версией обозревателя.
 - reports - генерация allure-отчетов из директории ./allure_results/
 
 - Мониторим процессы, виидим, что подняты контейнеры динамического сборщика maven-slave и один контейнера Selenoid с chrome v.104.0
-![img_1.png](img/img_1.png)
+![img_1.png](img/img_12.png)
 6. Проверяем генерацию Allure Report
-![img_3.png](img/img_3.png)
+![img_3.png](img/img_31.png)
 
 ## Конфигурация docker-compose Jenkins
 1. Создаем директорию Jenkins/
@@ -43,7 +43,7 @@ start /b selenoid-ui_windows_amd64.exe --selenoid-uri http://127.0.0.1:4445 -lis
    docker-compose up -d
 ```
 6. Проверяем
-![img_1.png](img_1.png)
+![img_1.png](img/img_1.png)
 7. Проверяем что создалась директория jenkins/registry
 
 ## Настройки Jenkins
@@ -53,7 +53,7 @@ start /b selenoid-ui_windows_amd64.exe --selenoid-uri http://127.0.0.1:4445 -lis
 ```
 docker logs jenkins_jenkins_1
 ```
-![img_2.png](img_2.png)
+![img_2.png](img/img_2.png)
 - Выбираем режим установки Install suggested plugins
 - Создаем пользователя admin/admin
 > Все последующие настройки профиля Jenkins должны сохраняться в jenkins_home, это настраивается в
@@ -123,7 +123,35 @@ _Проверяем работу maven-slave:_
 > (Состояние сборщиков → Мастер → Настройки → Количество процессов-исполнителей = 0)
 
 ## Настройка шаблонов для генерации job
-
+1. Чтобы пользоваться инструментом для деплоя шаблонов на Jenkins, нужно установить [Python](https://www.python.org/downloads/).
+Устанавливаем в директорию текущего пользователя, с заданием путей в PATH
+2. Генерить шаблоны будем инструментом [jenkins-job-builder](https://jenkins-job-builder.readthedocs.io/en/latest/installation.html), который есть у Python. Для этого:
+- удостоверимся, что вместе с Python установился пакетный менеджер Pip3, который умеет скачивать приложения
+```
+pip3 –version
+```
+3. Скачиваем инструмент jenkins-job-builder:
+```
+pip3 install --user jenkins-job-builder
+```
+4. Проверяем командой. Инсталляция инструмента должна пройти в ту же директорию, где установлен Python. 
+```
+jenkins-jobs
+```
+5. В директории \jenkins\config\ создаем файл [jobs.ini](vscode/config/jobs.ini)
+6. Создаем директорию config\jobs со следующими файлами
+- [view.yaml](vscode/config/jobs/view.yaml) – описание view и job
+- [Project.yaml](vscode/config/jobs/project.yaml) -  включаем job в проект
+- [global.yaml](vscode/config/jobs/global.yaml) с определением глобального контекста
+7. Создаем директорию \jenkins\config\jobs\templates и в ней создаем шаблон [ui_autotests.yaml](vscode/config/jobs/templates/ui_autotests_2.yaml)
+8. Создадим директорию jobs\macroses и в ней макрос [git-macroses-jenkins.yaml](vscode/config/jobs/macroses/git-macroses-jenkins.yaml)
+с доступом по http к репозиторию gitHub, а также с указанием credantional, в котором будут храниться логин и пароль и который будет настраиваться в Jenkins.
+9. Запускаем генерацию job по шаблону командой
+```
+jenkins-jobs --conf jobs.ini update ./
+```
+![img_4.png](img/img_4.png)
+10. Проверяем, что в Jenkins появилось view=QA и создался job = ui_autotests
 
 ## Скрипт* генерации pipeline
 _*Ссылка на этот скрипт задается в шаблоне job._
@@ -158,7 +186,7 @@ _*Ссылка на этот скрипт задается в шаблоне job
 - **Stage('reports')** - генерация allure-отчетов из директории ./allure_results/
 
 
-## Настройка Allure Reports ![img.png](img.png)
+## Настройка Allure Reports ![img.png](img/img.png)
 1. В java-проекте должны быть произведены все настройки для Allure - см. [pom.xml](pom.xml)
 2. Для читаемости отчетов необходимо проставить тэги allure по коду выполнения тестов.
 3. В Jenkins установить [Allure Plugin](https://plugins.jenkins.io/allure-jenkins-plugin/)
