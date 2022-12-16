@@ -36,12 +36,53 @@ start /b selenoid-ui_windows_amd64.exe --selenoid-uri http://127.0.0.1:4445 -lis
 ## Конфигурация docker-compose Jenkins
 
 ## Настройки Jenkins
+1. Настройка кредов (Credential)
+- Настроить Jenkins → Manage Credential
+- выбрать домен global → Add credential
+```
+Kind = Username with password 
+Scope = Global
+Username = {username from gitHub}
+Password = {password from gitHub}
+ID = jenkins
+Description = jenkins
+```
 
-
-## Генерация job
+## Настройка шаблонов для генерации job
 
 
 ## Скрипт генерации pipeline
+
+[Скрипт* генерации pipeline для UI тестов](jenkins/ui_autotests.groovy) содержит:
+
+_*Ссылка на этот скрипт задается в шаблоне job._
+- **Stage('checkout')** - коннект к репозиторию с тестами на gitHub.
+Настройка производится через [макрос](vscode/config/jobs/macroses/git-macroses-jenkins.yaml), в котором задан
+способ коннекта к gitHub. В данном случае по протоколу http с заданием логина/пароля в кредах (credentional).
+
+
+- **Stage('Running UI tests')** - запуск тестов командой maven c указанием параметров:
+```
+-Dbase.url=${BASE_URL} - адрес тестируемого сайта www.otus.ru
+-Dbrowser=${BROWSER_NAME} - название браузера (chrome или opera)
+-Dbrowser.version=${BROWSER_VERSION} - версии браузера (chrome 104.0, 103.0; opera 88.0)
+-Dfilter=${FILTER} - фильтр курсов по названию. По умолчанию null - вывод всех курсов.
+```
+Параметры настраиваются в [pom.xml](pom.xml) и в конфиге [шаблона job](vscode/config/jobs/templates/ui_autotests_2.yaml)
+Далее каждый раз при сборке job с параметрами их значения можно корректировать.
+
+Для каждого теста будет подниматься образ selenoid с настроенной версией обозревателя. 
+> Url на **Selenoid** задается в [pom.xml](pom.xml) параметром 
+> 
+>><webdriver.remote.url> http://127.0.0.1:4445/wd/hub </webdriver.remote.url> 
+> 
+>Для того чтобы тесты выполнялись на локальной машине, нужно параметр сбросить в null.
+
+Настройка Selenoid_1 описана в [readme Otushome_4](https://github.com/nmochalova/Otushome_4).
+Для него подгружены слои трех обозревателей [Chrome v.103.0, v.104.0 и Opera v.88.0](vscode/browser.json)
+
+- **Stage('reports')** - генерация allure-отчетов из директории ./allure_results/
+
 
 ## Настройка Allure Reports ![img.png](img.png)
 1. В java-проекте должны быть произведены все настройки для Allure - см. [pom.xml](pom.xml)
@@ -57,7 +98,7 @@ start /b selenoid-ui_windows_amd64.exe --selenoid-uri http://127.0.0.1:4445 -lis
 - В разделе Post-build Actions нажать кнопку Add post-build action → Allure Report
 - В поле Results указать путь до директории «allure-results» 
 4. После выполнения всех настроек запустите свою джобу. 
-5. После ее выполнения в блоке Build History напротив номера сборки появится значок Allure , 
+5. После ее выполнения в блоке Build History напротив номера сборки появится значок Allure, 
 кликнув по которому, вы увидите сформированный html-отчет (пустой).
 
 Эти манипуляции позволяют закачать нужные зависимости. 
