@@ -2,6 +2,7 @@ package pages;
 
 import data.Months;
 import datatable.DataTableCourse;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -35,6 +36,7 @@ public class MainPage extends Page {
     @FindBy(xpath = "//div[@class='lessons']//a[contains(@class,'lessons__new-item')]")
     private List<WebElement> allCourses;
 
+    @Step("Get names all courses")
     public List<String> getNamesAllCourse() {
         List<String> names = new ArrayList<>();
         for (WebElement element : allCourses) {
@@ -43,10 +45,12 @@ public class MainPage extends Page {
         return names;
     }
 
+    @Step("Get name of one course")
     public String getNameOfCourse(WebElement course) {
         return course.findElement(By.className("lessons__new-item-title")).getText();
     }
 
+    @Step("Get set name and date of courses")
     public HashMap<WebElement, DataTableCourse> getNamesAndDates() {
         HashMap<WebElement, DataTableCourse> nameAndDate = new HashMap<>();
         String nameCourse;
@@ -77,11 +81,13 @@ public class MainPage extends Page {
         return nameAndDate;
     }
 
+    @Step("Filter courses by name")
     //Метод фильтр по названию курса
     public List<String> filterCourseByName(List<String> names, String name) {
         return names.stream().filter(p -> p.contains(name)).collect(Collectors.toList());
     }
 
+    @Step("Get min or max date of course")
     //Метод выбора курса, стартующего раньше всех/позже всех (при совпадении дат - выбрать любой) при помощи reduce
     //isMax принимает значение "max" - для выбора курса, стартующего позже всех и "min" - раньше всех.
     public WebElement getMinMaxDateOfCourse(HashMap<WebElement, DataTableCourse> nameAndDate, Boolean isMax) {
@@ -109,6 +115,7 @@ public class MainPage extends Page {
         return result;
     }
 
+    @Step("Parsing string to set of date")
     //Парсим строку в массив дат
     private Date parserDateRegex(String stringDateFromSite) {
         int day;
@@ -127,6 +134,7 @@ public class MainPage extends Page {
             return null;
     }
 
+    @Step("Converted string to date")
     //Преобразование строки в дату
     private Date stringToDate(int day, String month, String year) {
         LocalDate date = LocalDate.now();
@@ -147,6 +155,7 @@ public class MainPage extends Page {
         return Months.findMonth(monthRUS);
     }
 
+    @Step("Move cursor to element")
     public void moveToElement(WebElement element) {
         Actions actions = new Actions(driver);
         try {
@@ -156,6 +165,7 @@ public class MainPage extends Page {
         }
     }
 
+    @Step("Click to element")
     public void clickToElement(WebElement element) {
         moveToElement(element);
         element.click();

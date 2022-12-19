@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,7 @@ public class CoursePage extends Page{
         super(driver);
     }
 
+    @Step("Get title by course")
     public String getTitleByCourse(String titleBeforeClick) {
         By locator = null;
 
